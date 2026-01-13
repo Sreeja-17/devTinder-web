@@ -19,12 +19,17 @@ const Premium = () => {
   };
 
   const handleBuyClick = async (type) => {
+    // Add this check inside handleBuyClick
+if (!window.Razorpay) {
+  alert("Razorpay SDK failed to load. Are you online?");
+  return;
+}
     const order = await axios.post(
       BASE_URL + "/payment/create",
       {
         membershipType: type,
       },
-      { withCredentials: true }
+      { withCredentials: true },
     );
 
     const { amount, keyId, currency, notes, orderId } = order.data;
